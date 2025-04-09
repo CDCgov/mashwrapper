@@ -83,3 +83,6 @@ We thank the following people for their extensive assistance in the development 
 ## Contributions and Support
 
 If you would like to contribute to this pipeline, please file an [Issue](https://github.com/CDCgov/mashwrapper/issues)
+
+## Repository Usage and Legal Notices
+Please see the [notices page](https://github.com/CDCgov/mashwrapper/blob/main/docs/notices.md) for detailed information
