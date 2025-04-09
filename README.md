@@ -44,7 +44,6 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 *You will likely need to adjust the [nfcore_custom.config](https://github.com/CDCgov/mashwrapper/blob/main/conf/nfcore_custom.config) file to work on your compute infrastructure. You can specify its use by pointing to the directory where that file is located with the `--custom_config_base` flag, which should point to the "conf" directory (i.e., ~/mashwrapper/conf).*
 
-
    ```console
     ## Use git to donwload/clone the repository 
     git clone https://github.com/CDCgov/mashwrapper.git
@@ -65,6 +64,10 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
   ## Use your already built database
    nextflow run nf-core/mashwrapper -profile <docker/singularity/conda> --input samplesheet.csv --use_database myMashDatabase.msh --custom_config_base ~/mashwrapper/conf
   ```
+
+## Documentation
+
+The nf-core/mashwrapper pipeline comes with documentation about the pipeline [usage and parameters](https://github.com/CDCgov/mashwrapper/blob/main/docs/usage.md) and [output](https://github.com/CDCgov/mashwrapper/blob/main/docs/output.md).
 
 ## Credits
 
