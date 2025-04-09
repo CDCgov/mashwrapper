@@ -42,34 +42,33 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
  > - myMashDatabase.msh - prebuilt Mash database using the same isolates listed in the inputDB.txt file. This file will be used if testUse option is indicated (-profile testUse)
  > - subERR125190_(1,2).fastq.gz - subset reads of *Legionella fallonii* to only 45000 reads
 
-*You will likely need to adjust the [nfcore_custom.config](https://github.com/CDCgov/mashwrapper/blob/main/conf/nfcore_custom.config) file to work on your compute infrastructure. You can specify its use by pointing to the directory where that file is located with the `--custom_config_base` flag, which should point to the "conf" directory (i.e., ~/mashwrapper/conf) 
+*You will likely need to adjust the [nfcore_custom.config](https://github.com/CDCgov/mashwrapper/blob/main/conf/nfcore_custom.config) file to work on your compute infrastructure. You can specify its use by pointing to the directory where that file is located with the `--custom_config_base` flag, which should point to the "conf" directory (i.e., ~/mashwrapper/conf).*
 
 
    ```console
-    ## test out download of database
+    ## Use git to donwload/clone the repository 
+    git clone https://github.com/CDCgov/mashwrapper.git
+
+    ## Test out download of database, where YOURPROFILE could be singularity/docker/conda
     nextflow run mashwrapper -profile testGet,YOURPROFILE
     
-    ## test out using pre-built database
+    ## Test out using pre-built database, where YOURPROFILE could be singularity/docker/conda
     nextflow run mashwrapper -profile testUse,YOURPROFILE 
    ```
    
-4. Start running your own analysis!
+4. Start running your analysis!
 
   ```console
-   ## Use your already built database
-   nextflow run nf-core/mashwrapper -profile <docker/singularity/podman/shifter/charliecloud/conda/institute> --input samplesheet.csv --use_database myMashDatabase.msh --custom_config_base /scicomp/home-pure/ptx4/mashwrapper/conf
+   ## Download and build your database for organism(s) of interest
+   nextflow run nf-core/mashwrapper -profile <docker/singularity/conda> --input samplesheet.csv --get_database organismsheet.txt --custom_config_base ~/mashwrapper/conf
 
-   ## Download and built your database for organism(s) of interest
-   nextflow run nf-core/mashwrapper -profile <docker/singularity/podman/shifter/charliecloud/conda/institute> --input samplesheet.csv --get_database organismsheet.txt --custom_config_base /scicomp/home-pure/ptx4/mashwrapper/conf
+  ## Use your already built database
+   nextflow run nf-core/mashwrapper -profile <docker/singularity/conda> --input samplesheet.csv --use_database myMashDatabase.msh --custom_config_base ~/mashwrapper/conf
   ```
-
-## Documentation
-
-The nf-core/mashwrapper pipeline comes with documentation about the pipeline [usage](https://nf-co.re/mashwrapper/usage), [parameters](https://nf-co.re/mashwrapper/parameters) and [output](https://nf-co.re/mashwrapper/output).
 
 ## Credits
 
-nf-core/mashwrapper was originally written by Jenna Hamlin.
+mashwrapper was originally written by Jenna Hamlin and is based heavily on previous work developed by Jason Caravas.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
@@ -78,23 +77,4 @@ We thank the following people for their extensive assistance in the development 
 
 ## Contributions and Support
 
-If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
-
-For further information or help, don't hesitate to get in touch on the [Slack `#mashwrapper` channel](https://nfcore.slack.com/channels/mashwrapper) (you can join with [this invite](https://nf-co.re/join/slack)).
-
-## Citations
-
-<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
-<!-- If you use  nf-core/mashwrapper for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
-
-<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
-
-An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
-
-You can cite the `nf-core` publication as follows:
-
-> **The nf-core framework for community-curated bioinformatics pipelines.**
->
-> Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso & Sven Nahnsen.
->
-> _Nat Biotechnol._ 2020 Feb 13. doi: [10.1038/s41587-020-0439-x](https://dx.doi.org/10.1038/s41587-020-0439-x).
+If you would like to contribute to this pipeline, please file an [Issue](https://github.com/CDCgov/mashwrapper/issues)
