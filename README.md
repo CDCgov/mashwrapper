@@ -42,8 +42,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
  > - myMashDatabase.msh - prebuilt Mash database using the same isolates listed in the inputDB.txt file. This file will be used if testUse option is indicated (-profile testUse)
  > - subERR125190_(1,2).fastq.gz - subset reads of *Legionella fallonii* to only 45000 reads
 
-*For CDC users, you need to include the flag --custom_config_base and point to the conf subdirectory to supply the certificate information for singularity use, via this [custom config file](https://github.com/jennahamlin/mashwrapper/tree/main/conf) (e.g., --custom_config_base /scicomp/home-pure/ptx4/mashwrapper/conf)*
- 
+*You will likely need to adjust the [nfcore_custom.config](https://github.com/CDCgov/mashwrapper/blob/main/conf/nfcore_custom.config) file to work on your compute infrastructure. You can specify its use by pointing to the directory where that file is located with the `--custom_config_base` flag, which should point to the "conf" directory (i.e., ~/mashwrapper/conf) 
+
 
    ```console
     ## test out download of database
