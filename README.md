@@ -36,11 +36,13 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 3. Clone the pipeline and test it on a minimal dataset:
 
- >  A test dataset is available once you git clone this repo and includes [five files](https://github.com/jennahamlin/mashwrapper/tree/main/test-data):
+ >  A test dataset is available once you git clone this repo and includes the following [files](https://github.com/jennahamlin/mashwrapper/tree/main/test-data):
  > - inputDB.txt - text file of species to download when using the test profile (-profile testGet). The file does  not include a header
  > - inputReads.csv - CSV file listing pairs of reads and includes the following header: sample,fastq_1,fastq_2
  > - myMashDatabase.msh - prebuilt Mash database using the same isolates listed in the inputDB.txt file. This file will be used if testUse option is indicated (-profile testUse)
  > - subERR125190_(1,2).fastq.gz - subset reads of *Legionella fallonii* to only 45000 reads
+ > - subERR351242_(1,2).fastq.gz - subset reads of *Legionella pneumophila* to only 45000 reads
+ > - subSRR10019387_(1,2).fastq.gz - subset reads of *Legionella longbeachae* to only 45000 reads
 
 *You will likely need to adjust the [nfcore_custom.config](https://github.com/CDCgov/mashwrapper/blob/main/conf/nfcore_custom.config) file to work on your compute infrastructure. You can specify its use by pointing to the directory where that file is located with the `--custom_config_base` flag, which should point to the "conf" directory (i.e., ~/mashwrapper/conf).*
 
