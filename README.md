@@ -15,7 +15,7 @@ You can provide the database for comparison in two ways:
 
 The tool outputs a text file containing the top five matches from the Mash database for the input reads. This output includes standard Mash results, and the best species match is determined by a cutoff based on the Mash distance score. For Legionella, this cutoff is conservatively set to a Mash distance of < 0.05. If you're using the tool for a different species, you should adjust this cutoff value based on what is most appropriate for your organism.
 
-The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. 
+The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers, making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process, which makes it much easier to maintain and update software dependencies. 
 
 ## Pipeline summary
 
@@ -47,7 +47,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 *You will likely need to adjust the [nfcore_custom.config](https://github.com/CDCgov/mashwrapper/blob/main/conf/nfcore_custom.config) file to work on your compute infrastructure. You can specify its use by pointing to the directory where that file is located with the `--custom_config_base` flag, which should point to the "conf" directory (i.e., ~/mashwrapper/conf).*
 
    ```console
-    ## Use git to donwload/clone the repository 
+    ## Use git to download/clone the repository 
     git clone https://github.com/CDCgov/mashwrapper.git
 
     ## Test out download of database, where YOURPROFILE could be singularity/docker/conda
@@ -73,12 +73,12 @@ The nf-core/mashwrapper pipeline comes with documentation about the pipeline [us
 
 ## Credits
 
-mashwrapper was originally written by Jenna Hamlin and is based heavily on previous work developed by Jason Caravas.
+mashwrapper is based heavily on previous work by [Jason Caravas](https://github.com/jacaravas), and this current version was written by [Jenna Hamlin](https://github.com/jennahamlin). 
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
-- Sateeshe Peri
-- Micheal Cipriano
+- [Sateeshe Peri](https://github.com/sateeshperi)
+- [Michael Cipriano](https://github.com/mciprianoCDC)
 
 ## Contributions and Support
 
