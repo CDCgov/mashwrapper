@@ -172,21 +172,22 @@ do
 				grep -o "GCA_..........." >> excluded_genomes.tmp
 
 			## Exclude genomes with completeness below 93.00 (range 0 - 100). 
-			## Inconsistencies exist in the assembly file fields between isolates; for example,
-			## some lack contamination estimates. 
-			## This script retrieves data from genomes with completeness ≥ 93.00 
-			## (printing fields $1 and $3) and those without (printing fields $1 and $4).
-			## Genome GCA IDs that are excluded are added to the excluded_genomes list.
-			
-			cat $subfolder/$speciesdownload/assembly_data_report.jsonl |  grep -o "completeness.*" | grep -o ".*organism" | \
-				awk -F , '{ print $1 $3 }' | grep -v "contamination" | awk -F\" '{ print $2 " " $5 }' | awk -F : '{ print $2 }' | \
-				awk '{ if( $1 < 93.00) print $2 }' >> excluded_genomes.tmp
-	
-			cat $subfolder/$speciesdownload/assembly_data_report.jsonl | grep -o "completeness.*" | grep -o ".*organism" | \
-				awk -F , '{ print $1 $4 }' | grep -v "contamination" | awk -F\" '{ print $2 " " $5 }' | awk -F : '{ print $2 }' | \
-				awk '{ if( $1 < 93.00) print $1 " " $2 }' | grep GCA | awk '{ print $2 }' >> excluded_genomes.tmp
+			## Exclude genomes with taxonomy check status of Failed or Inconclusive
+			dataformat tsv genome \
+  			--inputfile $subfolder/$speciesdownload/assembly_data_report.jsonl \
+  			--fields accession,checkm-completeness,ani-check-status \
+  			--force \
+			| awk -F'\t' 'NR > 1 && ($3 == "Failed" || $3 == "Inconclusive" ) { print $1 }' \
+			>> excluded_genomes.tmp
 
-			cat excluded_genomes.tmp | uniq -u >> excluded_genomes.txt
+			dataformat tsv genome \
+  			--inputfile $subfolder/$speciesdownload/assembly_data_report.jsonl \
+  			--fields accession,checkm-completeness,ani-check-status \
+  			--force \
+			| awk -F'\t' 'NR > 1 && $2 ~ /^[0-9.]+$/ && ($2 + 0 < 93.00) { print $1 }' \
+			>> excluded_genomes.tmp
+
+			sort excluded_genomes.tmp | uniq >> excluded_genomes.txt
 
 			## Now remove folders for genomes listed in exclusion file
 			TO_BE_DEL="excluded_genomes.txt"
@@ -266,9 +267,18 @@ do
 			## Rename files using mapfile
 			cd $subfolder/allDownload 
 			awk -F " " 'system("mv " $1 " " $2 ".fna")'  $subfolder/$valUp/ncbi_dataset/data/mapFinal$valUp.txt
-			
+		        	
 			## Move back to base directory of genomesDownloaded_timestamp
 			cd $subfolder
+			
+			## Folder and file clean up
+			for dir in */ncbi_dataset/data/*; do
+    				[ -d "$dir" ] && rm -r "$dir"
+			done
+			rm $valUp/ncbi_dataset/data/mapFinal$valUp.txt
+			rm $valUp/ncbi_dataset/data/temp
+			rm $valUp/ncbi_dataset/data/temp2
+
 			echo "Summarizing the entire download..."
 
 ####################
@@ -318,6 +328,12 @@ do
 			else
 				echo "No .fna files generated. This is a placeholder. " >> $basefolder/$valUp-noFNA.fna
 			fi
+
+			echo "All downloads and checks completed successfully. Exiting the downloading script."
+			echo "----------------------------------------"
+			cd $subfolder
+			rm -r allDownload
+
 		else
 			echo "Exiting the program."
 			echo "----------------------------------------"
