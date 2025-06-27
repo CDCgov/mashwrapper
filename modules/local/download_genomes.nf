@@ -1,10 +1,10 @@
 process DOWNLOAD_GENOMES {
 	  label 'process_low'
 
-	  conda (params.enable_conda ? "bioconda::p7zip=15.09 conda-forge::ncbi-datasets-cli=15.2.0" : null)
+	  conda (params.enable_conda ? "bioconda::p7zip=15.09 conda-forge::ncbi-datasets-cli=18.0.2" : null)
 	  container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-	  'quay.io/staphb/ncbi-datasets:15.2.0' :
-	  'quay.io/staphb/ncbi-datasets:15.2.0' }"
+	  'quay.io/staphb/ncbi-datasets:18.0.2' :
+	  'quay.io/staphb/ncbi-datasets:18.0.2' }"
 
 	  input:
 	  val(organism)
