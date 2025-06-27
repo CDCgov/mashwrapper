@@ -232,7 +232,7 @@ do
 			## Get opposite of grep, so do not pass excluded genome information for file manipulation/checking
 			echo "Making $val map file for file name conversion and converting file names..."
 
-			dataformat tsv genome --inputfile *.jsonl --fields organism-name,accession,assminfo-paired-assmaccession --force  | \
+			dataformat tsv genome --inputfile *.jsonl --fields organism-name,accession,assminfo-paired-assm-accession --force  | \
 			grep -vFwf $subfolder/excluded_genomes.txt  | \
 			awk 'FNR==1 { header = $0; print }  $0 != header' | \
 			sed 's/\//-/g' | \
@@ -287,7 +287,7 @@ do
 ## INPUT TSV file form NCBI command line tool dataformat 
 ## OUTPUT TSV file with species and genebank accession downloaded
 		
-			dataformat tsv genome --package $valUp.zip --fields organism-name,accession,assminfo-paired-assmaccession --force | \
+			dataformat tsv genome --package $valUp.zip --fields organism-name,accession,assminfo-paired-assm-accession --force | \
 			grep -vFwf $subfolder/excluded_genomes.txt | \
 			awk 'FNR==1 { header = $0; print }  $0 != header' | \
 			grep -v 'Legionella sp\.' | \
