@@ -5,6 +5,12 @@
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
 
+Org: CDC/NCIRD/DBB/RDB/PSLB  
+Contact Email: jhamlin@cdc.gov  
+Exemption: None  
+Status: Maintenance  
+
+
 ## Introduction
 
 **mashwrapper** is a wrapper around the program [Mash](https://mash.readthedocs.io/en/latest/) and the [NCBI Datasets command line tools](https://www.ncbi.nlm.nih.gov/datasets/docs/v1/download-and-install/). It identifies the most likely species from a pair of gzipped FASTQ reads using a Mash database. 
