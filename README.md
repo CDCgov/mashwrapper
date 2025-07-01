@@ -38,7 +38,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 1. Install [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=21.10.3`)
 
-2. install either [`Docker`](https://docs.docker.com/engine/installation/) or [`Apptainer/Singularity`](https://apptainer.org/) to ensure full pipeline reproducibility with Nextflow. _[`Conda`](https://conda.io/miniconda.html) may be used as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))_
+2. Install either [`Docker`](https://docs.docker.com/engine/installation/) or [`Apptainer/Singularity`](https://apptainer.org/) to ensure full pipeline reproducibility with Nextflow. _[`Conda`](https://conda.io/miniconda.html) may be used as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))_
 
 3. Clone or download the pipeline and test it on a minimal dataset:
 
@@ -69,10 +69,10 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
   ```console
    ## Build a Mash database for organism(s) of interest
-   nextflow run nf-core/mashwrapper -profile <docker/singularity/conda> --input samplesheet.csv --get_database organismsheet.txt --custom_config_base ~/mashwrapper/conf
+   nextflow run nf-core/mashwrapper -profile <Docker/Apptainer/Conda> --input samplesheet.csv --get_database organismsheet.txt --custom_config_base ~/mashwrapper/conf
 
   ## Use a prebuilt Mash database
-   nextflow run nf-core/mashwrapper -profile <docker/singularity/conda> --input samplesheet.csv --use_database myMashDatabase.msh --custom_config_base ~/mashwrapper/conf
+   nextflow run nf-core/mashwrapper -profile <Docker/Apptainer/Conda> --input samplesheet.csv --use_database myMashDatabase.msh --custom_config_base ~/mashwrapper/conf
   ```
 
 ## Documentation
