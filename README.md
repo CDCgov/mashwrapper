@@ -57,11 +57,11 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
     git clone https://github.com/CDCgov/mashwrapper.git
 
     ## Step 2: Test downloading and building the databse
-    ## "YOURPROFILE" is your preferred execution environment (Docker, Apptainer or Conda)
+    ## "YOURPROFILE" is your preferred execution environment (Docker, Singularity or Conda)
     nextflow run mashwrapper -profile testGet,YOURPROFILE
     
     ## Step 3: Test using a prebuilt database
-    ## "YOURPROFILE" is your preferred execution environment (Docker, Apptainer or Conda)
+    ## "YOURPROFILE" is your preferred execution environment (Docker, Singularity or Conda)
     nextflow run mashwrapper -profile testUse,YOURPROFILE 
    ```
 *You will likely need to adjust the [nfcore_custom.config](https://github.com/CDCgov/mashwrapper/blob/main/conf/nfcore_custom.config) file to work on your compute environment. To use it, specify the path to its directory using the `--custom_config_base` flag. This should point to the "conf" directory (i.e., ~/mashwrapper/conf).*
@@ -71,10 +71,10 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
   ```console
    ## Build a Mash database for organism(s) of interest
-   nextflow run nf-core/mashwrapper -profile <Docker/Apptainer/Conda> --input samplesheet.csv --get_database organismsheet.txt --custom_config_base ~/mashwrapper/conf
+   nextflow run nf-core/mashwrapper -profile <Docker/Singularity/Conda> --input samplesheet.csv --get_database organismsheet.txt --custom_config_base ~/mashwrapper/conf
 
   ## Use a prebuilt Mash database
-   nextflow run nf-core/mashwrapper -profile <Docker/Apptainer/Conda> --input samplesheet.csv --use_database myMashDatabase.msh --custom_config_base ~/mashwrapper/conf
+   nextflow run nf-core/mashwrapper -profile <Docker/Singularity/Conda> --input samplesheet.csv --use_database myMashDatabase.msh --custom_config_base ~/mashwrapper/conf
   ```
 
 ## Documentation
