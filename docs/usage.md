@@ -1,10 +1,41 @@
-# mashwrapper: Usage
+# mashwrapper Parameters
 
-> _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
+```
+------------------------------------------------------
+                                        ,--./,-.
+        ___     __   __   __   ___     /,-._.--~'
+  |\ | |__  __ /  ` /  \ |__) |__         }  {
+  | \| |       \__, \__/ |  \ |___     \`-._,-`-,
+                                        `._,._,'
+  mashwrapper v3.2.2
+------------------------------------------------------
+Typical pipeline command:
 
-## Introduction
+  nextflow run mashwrapper --input inputReads.csv --get_database inputDB.txt -profile docker
 
-<!-- TODO nf-core: Add documentation about anything specific to running your pipeline. For general topics, please point to (and add to) the main nf-core website. -->
+Input/output options
+  --input                      [string]  Path to a CSV file with the following header: sample,fastq1.gz,fastq2.gz
+  --outdir                     [string]  Path to the output directory where results will be saved [default: ./results]
+  --email_addy                 [string]  Primary email address to send the results summary file
+  --email_cc                   [string]  Email addresses to CC when sending results, comma-separated if multiple
+  --email_subject              [string]  Custom subject line for the results email [default: Results from mashwrapper to identify species]
+
+Database options
+  --get_database               [string]  Path to a plain text file listing organisms to download from NCBI; one per line, as either "Genus" or "Genus species"  
+                                          
+  --use_database               [string]  Path to a prebuilt Mash database (.msh)
+  --assembly_level             [string]  Restrict genomes downloaded to specific assembly levels: chromosome, complete, scaffold, contig; comma-separated 
+                                         list 
+
+Optional pipeline parameters
+  --size_kmer                  [integer] Length of k-mers used in Mash sketches (1–32). Only applicable when downloading genomes or inferred from prebuilt 
+                                         database [default: 25] 
+  --max_dist                   [number]  Maximum Mash distance to consider for species identification [default: 0.05]
+  --kmer_min                   [integer] Minimum k-mer copy number. Defaults to estimated coverage/3; override with a custom value ≥ 2 [default: 2]
+  --num_threads                [integer] Number of threads to use for parallel processing [default: 2]
+
+!! Hiding 18 params, use --show_hidden_params to show them !!
+```
 
 ## Samplesheet input
 
