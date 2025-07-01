@@ -43,7 +43,7 @@ CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
 CONTROL_REP1,AEG588A1_S1_L003_R1_001.fastq.gz,AEG588A1_S1_L003_R2_001.fastq.gz
 CONTROL_REP1,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
 ```
-*Note: In theory multiple runs of the same sample should work, though it has not been explicitly tested with mashwrapper*
+*Note: While multiple runs of the same sample should work in theory, this functionality has not been explicitly tested with mashwrapper.*
 
 | Column    | Description                                                                                                                                                                            |
 | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -58,7 +58,7 @@ An [example samplesheet](https://github.com/CDCgov/mashwrapper/blob/main/test-da
 The typical command for running the pipeline is as follows:
 
 ```console
-nextflow run mashwrapper --input samplesheet.csv --input inputReads.csv --get_database inputDB.txt -profile Singularity
+nextflow run mashwrapper --input inputReads.csv --get_database inputDB.txt -profile Singularity
 ```
 
 This will launch the pipeline with the `Singularity` configuration profile. See below for more information about profiles.
@@ -76,7 +76,7 @@ results         # Finished results (configurable, see below)
 
 It is a good idea to specify a pipeline version when running the pipeline on your data. This ensures that a specific version of the pipeline code and software are used when you run your pipeline. If you keep using the same tag, you'll be running the same version of the pipeline, even if there have been changes to the code since.
 
-First, go to the [mashwrapper releases page]([https://github.com/nf-core/mashwrapper/releases](https://github.com/CDCgov/mashwrapper/releases)) and find the latest version number - numeric only (eg. `3.2.2`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 3.2.2`.
+First, go to the [mashwrapper releases page]([https://github.com/nf-core/mashwrapper/releases](https://github.com/CDCgov/mashwrapper/releases) and find the latest version number - numeric only (eg. `3.2.2`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 3.2.2`.
 
 This version number will be logged in reports when you run the pipeline, so that you'll know what you used when you look back in the future.
 
