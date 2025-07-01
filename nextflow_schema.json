@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/mashwrapper/master/nextflow_schema.json",
+    "$id": "https://raw.githubusercontent.com/mashwrapper/nextflow_schema.json",
     "title": "mashwrapper pipeline parameters",
     "description": "This is a wrapper around the program Mash. The input is a mash database and your fastq reads of interest. The output is a text file which displays the top five closet matches to your query. ",
     "type": "object",
