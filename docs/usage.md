@@ -118,7 +118,7 @@ To resolve these errors, you’ll need to identify which specific resources need
 Default values for the process_* labels are defined in [`base.config`](https://github.com/CDCgov/mashwrapper/blob/8832c347c2805237655f2d8ba6ff0f0961c08098/conf/base.config#L29). As long as you haven’t set other nf-core parameters that limit [maximum resource usage](https://nf-co.re/usage/configuration#max-resources), you can bypass failures by creating or updating a custom config file with adjusted memory settings. This config file can be supplied to the pipeline using the  [`-c`](#-c) parameter, as described in earlier sections.
 
 ### Updating containers
-The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. If for some reason you need to use a different version of a particular tool with the pipeline then you just need to identify the `process` name and override the Nextflow `container` definition for that process using the `withName` declaration. You can also override the default container used by the pipeline by creating a custom config file and passing it as a command-line argument via `-c custom.config`.
+The Nextflow DSL2 implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. If for some reason you need to use a different version of a particular tool with the pipeline then you just need to identify the `process` name and override the Nextflow `container` definition for that process using the `withName` declaration. You can also override the default container used by the pipeline by creating a custom config file and passing it as a command-line argument via `-c custom.config`.
 
 ### nf-core/configs
 See the main [Nextflow documentation](https://www.nextflow.io/docs/latest/config.html) for more information about creating your own configuration files.
@@ -129,6 +129,7 @@ If you have any questions or issues please send us a message on [Slack](https://
 Nextflow handles job submissions and supervises the running jobs. The Nextflow process must run until the pipeline is finished.
 
 The Nextflow `-bg` flag launches Nextflow in the background, detached from your terminal so that the workflow does not stop if you log out of your session. The logs are saved to a file.
+
 Some high performance computing (HPC) setups also allow you to run nextflow within a cluster job submitted your job scheduler (from where it submits more jobs).
 
 ## Nextflow memory requirements
