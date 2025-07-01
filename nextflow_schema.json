@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/mashwrapper/nextflow_schema.json",
+    "$id": "https://raw.githubusercontent.com/mashwrapper/main/nextflow_schema.json",
     "title": "mashwrapper pipeline parameters",
     "description": "This is a wrapper around the program Mash. The input is a mash database and your fastq reads of interest. The output is a text file which displays the top five closet matches to your query. ",
     "type": "object",
@@ -12,19 +12,6 @@
             "description": "Define where the pipeline should find input data and save output data.",
             "required": ["input", "outdir"],
             "properties": {
-                "email_addy": {
-                    "type": "string",
-                    "description": "Primary email address to send the results summary file"
-                },
-                "email_cc": {
-                    "type": "string",
-                    "description": "Email addresses to CC when sending results (comma-separated if multiple)"
-                },
-                "email_subject": {
-                    "type": "string",
-                    "default": "Results from mashWrapper for identifying species",
-                    "description": "Custom subject line for the results email"
-                },
                 "input": {
                     "type": "string",
                     "format": "file-path",
@@ -32,64 +19,16 @@
                     "schema": "assets/schema_input.json",
                     "mimetype": "text/csv",
                     "pattern": "^\\S+\\.csv$",
-                    "description": "Path to CSV file containing information about the samples in the experiment and has the following header:   sample,fastq1.gz,fastq2.gz",
+                    "description": "Path to comma-separated file containing information about the samples in the experiment.",
                     "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row.",
                     "fa_icon": "fas fa-file-csv"
                 },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",
-                    "description": "Path to the output directory where results will be saved",
+                    "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
                     "fa_icon": "fas fa-folder-open",
                     "default": "./results"
-                }
-            }
-        },
-        "database_options": {
-            "title": "Database options",
-            "type": "object",
-            "description": "",
-            "default": "",
-            "properties": {
-                "assembly_level": {
-                    "type": "boolean",
-                    "description": "Restrict genomes downloaded to specific assembly levels: chromosome, complete, scaffold, contig (comma-separated list)"
-                },
-                "get_database": {
-                    "type": "string",
-                    "description": "Path to a plain text file listing organisms to download from NCBI; one per line, as either \"Genus\" or \"Genus species\""
-                },
-                "use_database": {
-                    "type": "string",
-                    "description": "Path to a prebuilt Mash database (.msh)"
-                }
-            }
-        },
-        "optional_pipeline_parameters": {
-            "title": "Optional pipeline parameters",
-            "type": "object",
-            "description": "",
-            "default": "",
-            "properties": {
-                "kmer_min": {
-                    "type": "integer",
-                    "default": 2,
-                    "description": "Minimum k-mer copy number. Defaults to estimated coverage/3; override with a custom value \u2265 2"
-                },
-                "max_dist": {
-                    "type": "number",
-                    "default": 0.05,
-                    "description": "Maximum Mash distance to consider for species identification"
-                },
-                "num_threads": {
-                    "type": "integer",
-                    "default": 2,
-                    "description": "Number of threads to use for parallel processing"
-                },
-                "size_kmer": {
-                    "type": "integer",
-                    "default": 25,
-                    "description": "Length of k-mers used in Mash sketches (1\u201332). Only applicable when downloading genomes or inferred from prebuilt database"
                 }
             }
         },
@@ -115,23 +54,51 @@
             "$ref": "#/$defs/input_output_options"
         },
         {
-            "$ref": "#/$defs/database_options"
-        },
-        {
-            "$ref": "#/$defs/optional_pipeline_parameters"
-        },
-        {
             "$ref": "#/$defs/generic_options"
         }
     ],
     "properties": {
+        "use_database": {
+            "type": "string"
+        },
+        "get_database": {
+            "type": "string"
+        },
+        "assembly_level": {
+            "type": "boolean"
+        },
+        "max_dist": {
+            "type": "number",
+            "default": 0.05
+        },
+        "kmer_min": {
+            "type": "integer",
+            "default": 2
+        },
+        "num_threads": {
+            "type": "integer",
+            "default": 2
+        },
+        "size_kmer": {
+            "type": "integer",
+            "default": 25
+        },
+        "email_addy": {
+            "type": "string"
+        },
+        "email_cc": {
+            "type": "string"
+        },
+        "email_subject": {
+            "type": "string",
+            "default": "Results from mashWrapper for identifying species"
+        },
         "tracedir": {
             "type": "string",
             "default": "./results/pipeline_info"
         },
         "email": {
-            "type": "string",
-            "hidden": true
+            "type": "string"
         },
         "email_on_fail": {
             "type": "string"
