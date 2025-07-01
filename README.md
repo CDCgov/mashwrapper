@@ -83,7 +83,7 @@ The nf-core/mashwrapper pipeline comes with documentation about the pipeline [us
 
 ## Credits
 
-mashwrapper is based heavily on previous work by [Jason Caravas](https://github.com/jacaravas), and this current version was written by [Jenna Hamlin](https://github.com/jennahamlin). 
+mashwrapper is based heavily on previous work by [Jason Caravas](https://github.com/jacaravas) with the current version written by [Jenna Hamlin](https://github.com/jennahamlin). 
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
