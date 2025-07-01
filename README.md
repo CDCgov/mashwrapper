@@ -13,26 +13,26 @@ Status: Maintenance
 
 ## Introduction
 
-**mashwrapper** is a wrapper around the program [Mash](https://mash.readthedocs.io/en/latest/) and the [NCBI Datasets command line tools](https://www.ncbi.nlm.nih.gov/datasets/docs/v1/download-and-install/). It identifies the most likely species from a pair of gzipped FASTQ reads using a Mash database. 
+**mashwrapper** is a wrapper around the program [Mash](https://mash.readthedocs.io/en/latest/) and the [NCBI Datasets command line tools (CLI) ](https://www.ncbi.nlm.nih.gov/datasets/docs/v1/download-and-install/). It identifies the most likely species from a pair of gzipped FASTQ reads using a Mash database. 
 
 You can provide the database for comparison in two ways:
-1. Generate it from a text file using the `--get_database` option.
-2. Supplying an already built database using the `--use_database` option.
+1. `--get_database`: Used when downloading and building a new Mash database from genomes
+2. `--use_database`: Used when you're skipping the build step and providing a prebuilt Mash database****
 
 The tool outputs a text file containing the top five matches from the Mash database for the input reads. This output includes standard Mash results, and the best species match is determined by a cutoff based on the Mash distance score. For Legionella, this cutoff is conservatively set to a Mash distance of < 0.05. If you're using the tool for a different species, you should adjust this cutoff value based on what is most appropriate for your organism.
 
-The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers, making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process, which makes it much easier to maintain and update software dependencies. 
+The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers, making installation trivial and results highly reproducible. 
 
 ## Pipeline summary
 
-1. Confirm input sample sheet: Use `--get_database` or `--use_database`
-2. Confirm input organism sheet: `--get_database` (OPTIONAL)
-3. Download genomes from NCBI using [NCBI datasets command line tool](https://www.ncbi.nlm.nih.gov/datasets/): `--get_database` (OPTIONAL)
-4. Format downloaded genomes to be Genus_Species_GenebankIdentifier.fna using [NCBI dataformat command line tool](https://www.ncbi.nlm.nih.gov/datasets/docs/v1/quickstarts/command-line-tools/#install-using-curl): `--get_database` (OPTIONAL)
-5. Build individual [Mash sketches](https://mash.readthedocs.io/en/latest/) for all genomes downloaded: `--get_database` (OPTIONAL)
-6. Build [Mash database](https://mash.readthedocs.io/en/latest/) for all Mash sketches: `--get_database` (OPTIONAL)
-7. Test fastq.gz reads against either an optionally built Mash database or one provided by the user: `--get_database` or `--use_database`
-8. Collate results from each isolate of interest tested against the Mash database: `--get_database` or `--use_database`
+1. Confirm input sample sheet (`--get_database` or `--use_database`)
+2. Confirm input organism sheet [optional] (`--get_database`)
+3. Download genomes from NCBI using [NCBI datasets CLI](https://www.ncbi.nlm.nih.gov/datasets/) [optional] (`--get_database`)
+4. Format downloaded genomes to be Genus_Species_GenebankIdentifier.fna using [NCBI dataformat CLI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/command-line/dataformat/) [optional] (`--get_database`)
+5. Build individual [Mash sketches](https://mash.readthedocs.io/en/latest/sketches.html) for all genomes [optional] (`--get_database`)
+6. Build [Mash database](https://mash.readthedocs.io/en/latest/tutorials.html#pairwise-comparisons-with-compound-sketch-files) from all Mash sketches [optional] (`--get_database`)
+7. Test FASTQ reads against a Mash database either built or provided (`--get_database` or `--use_database`)
+8. Collate results from each isolate of interest tested against the Mash database (`--get_database` or `--use_database`)
 
 ## Quick Start
 
