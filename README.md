@@ -50,7 +50,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
  > - **subERR351242_(1,2).fastq.gz** - Subsampled reads (45,000 reads) from *Legionella pneumophila*
  > - **subSRR10019387_(1,2).fastq.gz** - Subsampled reads (45,000 reads) from *Legionella longbeachae*
 
-*You will likely need to adjust the [nfcore_custom.config](https://github.com/CDCgov/mashwrapper/blob/main/conf/nfcore_custom.config) file to work on your compute environment. To use it, specify the path to its directory using the `--custom_config_base` flag. This should point to the "conf" directory (i.e., ~/mashwrapper/conf).*
+**Step-by-step example commands**
 
    ```console
     ## Step 1: Clone the repository
@@ -64,6 +64,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
     ## "YOURPROFILE" is your preferred execution environment (Docker, Apptainer or Conda)
     nextflow run mashwrapper -profile testUse,YOURPROFILE 
    ```
+*You will likely need to adjust the [nfcore_custom.config](https://github.com/CDCgov/mashwrapper/blob/main/conf/nfcore_custom.config) file to work on your compute environment. To use it, specify the path to its directory using the `--custom_config_base` flag. This should point to the "conf" directory (i.e., ~/mashwrapper/conf).*
+
    
 4. Start running your analysis!
 
