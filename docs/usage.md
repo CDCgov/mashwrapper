@@ -1,5 +1,4 @@
 # mashwrapper Parameters
-
 ```console
 Input/output options
   --input                      [string]  Path to a CSV file with the following header: sample,fastq1.gz,fastq2.gz
@@ -26,7 +25,6 @@ Optional pipeline parameters
 ```
 
 ## Samplesheet input
-
 You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row as shown in the examples below.
 
 ```console
@@ -34,7 +32,6 @@ You will need to create a samplesheet with information about the samples you wou
 ```
 
 ### Multiple runs of the same sample
-
 The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
 
 ```console
@@ -54,7 +51,6 @@ CONTROL_REP1,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
 An [example samplesheet](https://github.com/CDCgov/mashwrapper/blob/main/test-data/inputReads.csv) has been provided with the pipeline.
 
 ## Running the pipeline
-
 The typical command for running the pipeline is as follows:
 
 ```console
@@ -73,7 +69,6 @@ results         # Finished results (configurable, see below)
 ```
 
 ### Reproducibility
-
 It is a good idea to specify a pipeline version when running the pipeline on your data. This ensures that a specific version of the pipeline code and software are used when you run your pipeline. If you keep using the same tag, you'll be running the same version of the pipeline, even if there have been changes to the code since.
 
 First, go to the [mashwrapper releases page](https://github.com/CDCgov/mashwrapper/releases) and find the latest version number - numeric only (eg. `3.2.2`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 3.2.2`.
@@ -81,11 +76,9 @@ First, go to the [mashwrapper releases page](https://github.com/CDCgov/mashwrapp
 This version number will be logged in reports when you run the pipeline, so that you'll know what you used when you look back in the future.
 
 ## Core Nextflow arguments
-
 > **NB:** These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
 
 ### `-profile`
-
 Use this parameter to choose a configuration profile. Profiles can give configuration presets for different compute environments.
 
 Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Conda) - see below. When using Biocontainers, most of these software packaging methods pull Docker containers from quay.io e.g [FastQC](https://quay.io/repository/biocontainers/fastqc) except for Singularity which directly downloads Singularity images via https hosted by the [Galaxy project](https://depot.galaxyproject.org/singularity/) and Conda which downloads and installs software locally from [Bioconda](https://bioconda.github.io/).
@@ -108,13 +101,11 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
   - Includes links to test data so needs no other parameters
 
 ### `-resume`
-
 Specify this when restarting a pipeline. Nextflow will used cached results from any pipeline steps where the inputs are the same, continuing from where it got to previously.
 
 You can also supply a run name to resume a specific run: `-resume [run-name]`. Use the `nextflow log` command to show previous run names.
 
 ### `-c`
-
 Specify the path to a specific config file (this is a core Nextflow command). See the [nf-core website documentation](https://nf-co.re/usage/configuration) for more information.
 
 ## Custom configuration
@@ -126,22 +117,8 @@ To resolve these errors, you’ll need to identify which specific resources need
 
 Default values for the process_* labels are defined in [`base.config`](https://github.com/CDCgov/mashwrapper/blob/8832c347c2805237655f2d8ba6ff0f0961c08098/conf/base.config#L29). As long as you haven’t set other nf-core parameters that limit [maximum resource usage](https://nf-co.re/usage/configuration#max-resources), you can bypass failures by creating or updating a custom config file with adjusted memory settings. This config file can be supplied to the pipeline using the  [`-c`](#-c) parameter, as described in earlier sections.
 
-
- The default values for the `process_*` labels are set in the pipeline's [`base.config`](https://github.com/CDCgov/mashwrapper/blob/8832c347c2805237655f2d8ba6ff0f0961c08098/conf/base.config#L29). Providing you haven't set any other standard nf-core parameters to **cap** the [maximum resources](https://nf-co.re/usage/configuration#max-resources) used by the pipeline then we can try and bypass failures by creating or updating a custom config file with altered memory. The custom config below can then be provided to the pipeline via the [`-c`](#-c) parameter as highlighted in previous sections.
-
-```nextflow
-process {
-    withName: STAR_ALIGN {
-        memory = 100.GB
-    }
-}
-```
-
-> **NB:** We specify just the process name i.e. `STAR_ALIGN` in the config file and not the full task name string that is printed to screen in the error message or on the terminal whilst the pipeline is running i.e. `RNASEQ:ALIGN_STAR:STAR_ALIGN`. You may get a warning suggesting that the process selector isn't recognised but you can ignore that if the process name has been specified correctly. This is something that needs to be fixed upstream in core Nextflow.
-
 ### Updating containers
-
-The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. If for some reason you need to use a different version of a particular tool with the pipeline then you just need to identify the `process` name and override the Nextflow `container` definition for that process using the `withName` declaration. For example, in the [nf-core/viralrecon](https://nf-co.re/viralrecon) pipeline a tool called [Pangolin](https://github.com/cov-lineages/pangolin) has been used during the COVID-19 pandemic to assign lineages to SARS-CoV-2 genome sequenced samples. Given that the lineage assignments change quite frequently it doesn't make sense to re-release the nf-core/viralrecon everytime a new version of Pangolin has been released. However, you can override the default container used by the pipeline by creating a custom config file and passing it as a command-line argument via `-c custom.config`.
+The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. If for some reason you need to use a different version of a particular tool with the pipeline then you just need to identify the `process` name and override the Nextflow `container` definition for that process using the `withName` declaration. You can also override the default container used by the pipeline by creating a custom config file and passing it as a command-line argument via `-c custom.config`.
 
 1. Check the default version used by the pipeline in the module file for [Pangolin](https://github.com/nf-core/viralrecon/blob/a85d5969f9025409e3618d6c280ef15ce417df65/modules/nf-core/software/pangolin/main.nf#L14-L19)
 2. Find the latest version of the Biocontainer available on [Quay.io](https://quay.io/repository/biocontainers/pangolin?tag=latest&tab=tags)
