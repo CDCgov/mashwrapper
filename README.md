@@ -13,11 +13,11 @@ Status: Maintenance
 
 ## Introduction
 
-**mashwrapper** is a wrapper around the program [Mash](https://mash.readthedocs.io/en/latest/) and the [NCBI Datasets command line tools (CLI) ](https://www.ncbi.nlm.nih.gov/datasets/docs/v1/download-and-install/). It identifies the most likely species from a pair of gzipped FASTQ reads using a Mash database. 
+**mashwrapper** is a wrapper around the program [Mash](https://mash.readthedocs.io/en/latest/) and the [NCBI Datasets command line tools (CLI)](https://www.ncbi.nlm.nih.gov/datasets/docs/v1/download-and-install/). It identifies the most likely species from paired gzipped FASTQ reads using a Mash database. 
 
 You can provide the database for comparison in two ways:
 1. `--get_database`: Used when downloading and building a new Mash database from genomes
-2. `--use_database`: Used when you're skipping the build step and providing a prebuilt Mash database
+2. `--use_database`: Used when you're skipping the build step and instead providing a prebuilt Mash database
 
 The tool outputs a text file containing the top five matches from the Mash database for the input reads. This output includes standard Mash results, and the best species match is determined by a cutoff based on the Mash distance score. For Legionella, this cutoff is conservatively set to a Mash distance of < 0.05. If you're using the tool for a different species, you should adjust this cutoff value based on what is most appropriate for your organism.
 
@@ -38,7 +38,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 1. Install [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=21.10.3`)
 
-2. install either [`Docker`](https://docs.docker.com/engine/installation/) or [`Apptainer/Singularity`](https://apptainer.org/) to ensure full pipeline reproducibility with Nextflow. _[`Conda`](https://conda.io/miniconda.html) should be used only as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))_
+2. install either [`Docker`](https://docs.docker.com/engine/installation/) or [`Apptainer/Singularity`](https://apptainer.org/) to ensure full pipeline reproducibility with Nextflow. _[`Conda`](https://conda.io/miniconda.html) may be used as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))_
 
 3. Clone or download the pipeline and test it on a minimal dataset:
 
@@ -57,11 +57,11 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
     git clone https://github.com/CDCgov/mashwrapper.git
 
     ## Step 2: Test downloading and building the databse
-    ## "YOURPROFILE" is your preferred execution enrionment (docker,apptainer or conda)
+    ## "YOURPROFILE" is your preferred execution environment (Docker, Apptainer or Conda)
     nextflow run mashwrapper -profile testGet,YOURPROFILE
     
     ## Step 3: Test using a prebuilt database
-    ## "YOURPROFILE" is your preferred execution enrionment (docker,apptainer or conda)
+    ## "YOURPROFILE" is your preferred execution environment (Docker, Apptainer or Conda)
     nextflow run mashwrapper -profile testUse,YOURPROFILE 
    ```
    
