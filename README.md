@@ -17,7 +17,7 @@ Status: Maintenance
 
 You can provide the database for comparison in two ways:
 1. `--get_database`: Used when downloading and building a new Mash database from genomes
-2. `--use_database`: Used when you're skipping the build step and providing a prebuilt Mash database****
+2. `--use_database`: Used when you're skipping the build step and providing a prebuilt Mash database
 
 The tool outputs a text file containing the top five matches from the Mash database for the input reads. This output includes standard Mash results, and the best species match is determined by a cutoff based on the Mash distance score. For Legionella, this cutoff is conservatively set to a Mash distance of < 0.05. If you're using the tool for a different species, you should adjust this cutoff value based on what is most appropriate for your organism.
 
@@ -38,38 +38,40 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 1. Install [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=21.10.3`)
 
-2. Install any of [`Docker`](https://docs.docker.com/engine/installation/), [`Singularity`](https://www.sylabs.io/guides/3.0/user-guide/), [`Podman`](https://podman.io/), [`Shifter`](https://nersc.gitlab.io/development/shifter/how-to-use/) or [`Charliecloud`](https://hpc.github.io/charliecloud/) for full pipeline reproducibility _(please only use [`Conda`](https://conda.io/miniconda.html) as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))_
+2. install either [`Docker`](https://docs.docker.com/engine/installation/) or [`Apptainer/Singularity`](https://apptainer.org/) to ensure full pipeline reproducibility with Nextflow. _[`Conda`](https://conda.io/miniconda.html) should be used only as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))_
 
-3. Clone the pipeline and test it on a minimal dataset:
+3. Clone or download the pipeline and test it on a minimal dataset:
 
- >  A test dataset is available once you git clone this repo and includes the following [files](https://github.com/jennahamlin/mashwrapper/tree/main/test-data):
- > - inputDB.txt - text file of species to download when using the test profile (-profile testGet). The file does  not include a header
- > - inputReads.csv - CSV file listing pairs of reads and includes the following header: sample,fastq_1,fastq_2
- > - myMashDatabase.msh - prebuilt Mash database using the same isolates listed in the inputDB.txt file. This file will be used if testUse option is indicated (-profile testUse)
- > - subERR125190_(1,2).fastq.gz - subset reads of *Legionella fallonii* to only 45000 reads
- > - subERR351242_(1,2).fastq.gz - subset reads of *Legionella pneumophila* to only 45000 reads
- > - subSRR10019387_(1,2).fastq.gz - subset reads of *Legionella longbeachae* to only 45000 reads
+ >  This repository includes a test dataset with the following [files](https://github.com/jennahamlin/mashwrapper/tree/main/test-data):
+ > - **inputDB.txt** - A plain text file of species to download when using the `-profile testGet` option. File does not include a header.
+ > - **inputReads.csv** - A CSV file listing paired-end read files. It has the following header: sample,fastq_1,fastq_2
+ > - **myMashDatabase.msh** - A prebuilt Mash database from isolates listed in inputDB.txt file and used with the `-profile testUse` option. 
+ > - **subERR125190_(1,2).fastq.gz** - Subsampled reads (45,000 reads) from *Legionella fallonii* 
+ > - **subERR351242_(1,2).fastq.gz** - Subsampled reads (45,000 reads) from *Legionella pneumophila*
+ > - **subSRR10019387_(1,2).fastq.gz** - Subsampled reads (45,000 reads) from *Legionella longbeachae*
 
-*You will likely need to adjust the [nfcore_custom.config](https://github.com/CDCgov/mashwrapper/blob/main/conf/nfcore_custom.config) file to work on your compute infrastructure. You can specify its use by pointing to the directory where that file is located with the `--custom_config_base` flag, which should point to the "conf" directory (i.e., ~/mashwrapper/conf).*
+*You will likely need to adjust the [nfcore_custom.config](https://github.com/CDCgov/mashwrapper/blob/main/conf/nfcore_custom.config) file to work on your compute environment. To use it, specify the path to its directory using the `--custom_config_base` flag. This should point to the "conf" directory (i.e., ~/mashwrapper/conf).*
 
    ```console
-    ## Use git to download/clone the repository 
+    ## Step 1: Clone the repository
     git clone https://github.com/CDCgov/mashwrapper.git
 
-    ## Test out download of database, where YOURPROFILE could be singularity/docker/conda
+    ## Step 2: Test downloading and building the databse
+    ## "YOURPROFILE" is your preferred execution enrionment (docker,apptainer or conda)
     nextflow run mashwrapper -profile testGet,YOURPROFILE
     
-    ## Test out using pre-built database, where YOURPROFILE could be singularity/docker/conda
+    ## Step 3: Test using a prebuilt database
+    ## "YOURPROFILE" is your preferred execution enrionment (docker,apptainer or conda)
     nextflow run mashwrapper -profile testUse,YOURPROFILE 
    ```
    
 4. Start running your analysis!
 
   ```console
-   ## Download and build your database for organism(s) of interest
+   ## Build a Mash database for organism(s) of interest
    nextflow run nf-core/mashwrapper -profile <docker/singularity/conda> --input samplesheet.csv --get_database organismsheet.txt --custom_config_base ~/mashwrapper/conf
 
-  ## Use your already built database
+  ## Use a prebuilt Mash database
    nextflow run nf-core/mashwrapper -profile <docker/singularity/conda> --input samplesheet.csv --use_database myMashDatabase.msh --custom_config_base ~/mashwrapper/conf
   ```
 
