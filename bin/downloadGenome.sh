@@ -168,9 +168,17 @@ do
 				grep -o "GCA_..........." >> excluded_genomes.tmp
 
 			## Get 'unculture' legionella species GCA ids and adde to a list (excluded_genomes)
-			awk '{if(/uncultured/) print $1}' $subfolder/$speciesdownload/assembly_data_report.jsonl | \
-				grep -o "GCA_..........." >> excluded_genomes.tmp
+			#awk '{if(/uncultured/) print $1}' $subfolder/$speciesdownload/assembly_data_report.jsonl | \
+			#	grep -o "GCA_..........." >> excluded_genomes.tmp
 
+			## Get uncultured Legionella sp. GCA ids and add to excluded_genomes
+			dataformat tsv genome \
+    			--inputfile "$subfolder/$speciesdownload/assembly_data_report.jsonl" \
+    			--fields organism-name,accession \
+    			--force | \
+			awk -F'\t' 'NR > 1 && $1 == "uncultured Legionella sp." && $2 ~ /^GCA_/ { print $2 }' \
+			>> excluded_genomes.tmp
+			
 			## Exclude genomes with completeness below 93.00 (range 0 - 100). 
 			## Exclude genomes with taxonomy check status of Failed or Inconclusive
 			dataformat tsv genome \
